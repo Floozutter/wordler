@@ -5,3 +5,4 @@ authors = ["Floozutter <me@floozutter.site>"]
 edition = "2021"
 
 [dependencies]
+clap = "3.0.14"
