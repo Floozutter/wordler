@@ -1,6 +1,5 @@
 fn main() {
-    let app = clap::App::new("wordler")
-        .version(clap::crate_version!());
+    let app = clap::app_from_crate!();
     let matches = app.get_matches();
     println!("{matches:?}");
 }
