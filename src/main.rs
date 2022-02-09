@@ -6,6 +6,10 @@ fn main() {
         .subcommand(
             clap::App::new("solve")
                 .about("play a game of Wordle")
+        )
+        .subcommand(
+            clap::App::new("blind")
+                .about("predetermine guesses without seeing any hints")
         );
     let matches = app.get_matches();
     println!("{matches:?}");
