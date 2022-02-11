@@ -3,6 +3,7 @@ fn main() {
         .global_setting(clap::AppSettings::PropagateVersion)
         .global_setting(clap::AppSettings::UseLongFormatForHelpSubcommand)
         .setting(clap::AppSettings::SubcommandRequiredElseHelp)
+        .mut_arg("help", |a| a.help("print help information"))
         .subcommand(
             clap::App::new("blind")
                 .about("predetermine guesses without seeing any hints")
