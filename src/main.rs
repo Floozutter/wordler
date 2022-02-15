@@ -10,6 +10,10 @@ fn main() {
                 .about("predetermine guesses without seeing any hints")
         )
         .subcommand(
+            clap::App::new("every")
+                .about("play every possible game of Wordle")
+        )
+        .subcommand(
             clap::App::new("solve")
                 .about("play a game of Wordle")
         );
