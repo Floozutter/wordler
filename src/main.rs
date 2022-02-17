@@ -4,14 +4,14 @@ fn main() {
         .short('w')
         .takes_value(true)
         .value_name("FILE")
-        .help("newline-delimited dictionary of valid solutions")
+        .help("newline-delimited lexicon of valid solutions")
         .required(true);
     let arg_extra = clap::Arg::new("extra")
         .long("extra")
         .short('e')
         .takes_value(true)
         .value_name("FILE")
-        .help("newline-delimited dictionary of guessable nonsolutions");
+        .help("newline-delimited lexicon of guessable nonsolutions");
     let app = clap::app_from_crate!()
         .global_setting(clap::AppSettings::PropagateVersion)
         .setting(clap::AppSettings::SubcommandRequiredElseHelp)
