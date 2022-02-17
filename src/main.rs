@@ -6,6 +6,12 @@ fn main() {
         .value_name("FILE")
         .help("newline-delimited dictionary of valid solutions")
         .required(true);
+    let arg_extra = clap::Arg::new("extra")
+        .long("extra")
+        .short('e')
+        .takes_value(true)
+        .value_name("FILE")
+        .help("newline-delimited dictionary of guessable nonsolutions");
     let app = clap::app_from_crate!()
         .global_setting(clap::AppSettings::PropagateVersion)
         .setting(clap::AppSettings::SubcommandRequiredElseHelp)
@@ -16,16 +22,19 @@ fn main() {
             clap::App::new("blind")
                 .about("predetermine guesses without seeing any hints")
                 .arg(arg_words.clone())
+                .arg(arg_extra.clone())
         )
         .subcommand(
             clap::App::new("every")
                 .about("play every possible game of Wordle")
                 .arg(arg_words.clone())
+                .arg(arg_extra.clone())
         )
         .subcommand(
             clap::App::new("solve")
                 .about("play a game of Wordle")
                 .arg(arg_words.clone())
+                .arg(arg_extra.clone())
         );
     let matches = app.get_matches();
     println!("{matches:?}");
