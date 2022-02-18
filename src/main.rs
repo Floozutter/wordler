@@ -35,6 +35,14 @@ fn main() {
                 .about("play a game of Wordle")
                 .arg(arg_words.clone())
                 .arg(arg_extra.clone())
+                .arg(
+                    clap::Arg::new("known")
+                        .long("known")
+                        .short('k')
+                        .takes_value(true)
+                        .value_name("WORD")
+                        .help("solution to the game (avoids manual hinting)")
+                )
         );
     let matches = app.get_matches();
     println!("{matches:?}");
