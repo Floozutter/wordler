@@ -43,6 +43,12 @@ fn main() {
                         .value_name("WORD")
                         .help("solution to the game (avoids manual hinting)")
                 )
+                .arg(
+                    clap::Arg::new("query-quash")
+                        .long("query-quash")
+                        .short('q')
+                        .help("prompt to override suggested guess")
+                )
         );
     let matches = app.get_matches();
     println!("{matches:?}");
