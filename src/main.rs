@@ -49,6 +49,12 @@ fn main() {
                         .short('q')
                         .help("prompt to override suggested guess")
                 )
+                .arg(
+                    clap::Arg::new("query-spill")
+                        .long("query-spill")
+                        .short('s')
+                        .help("prompt to reveal all remaining solutions")
+                )
         );
     let matches = app.get_matches();
     println!("{matches:?}");
