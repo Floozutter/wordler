@@ -23,6 +23,15 @@ fn main() {
                 .about("predetermine guesses without seeing any hints")
                 .arg(arg_words.clone())
                 .arg(arg_extra.clone())
+                .arg(
+                    clap::Arg::new("count")
+                        .long("count")
+                        .short('c')
+                        .takes_value(true)
+                        .value_name("N")
+                        .help("number of predetermined guesses")
+                        .required(true)
+                )
         )
         .subcommand(
             clap::App::new("every")
