@@ -32,6 +32,15 @@ fn main() {
                         .help("number of predetermined guesses")
                         .required(true)
                 )
+                .arg(
+                    clap::Arg::new("given")
+                        .long("given")
+                        .short('g')
+                        .takes_value(true)
+                        .multiple_values(true)
+                        .value_name("WORD")
+                        .help("words must appear in each group of guesses")
+                )
         )
         .subcommand(
             clap::App::new("every")
