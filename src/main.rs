@@ -41,6 +41,15 @@ fn main() {
                         .value_name("WORD")
                         .help("words must appear in each group of guesses")
                 )
+                .arg(
+                    clap::Arg::new("tries")
+                        .long("tries")
+                        .short('t')
+                        .takes_value(true)
+                        .value_name("N")
+                        .help("number of groups of guesses to generate")
+                        .required(true)
+                )
         )
         .subcommand(
             clap::App::new("every")
