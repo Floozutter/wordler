@@ -46,7 +46,7 @@ fn main() {
                         .takes_value(true)
                         .multiple_values(true)
                         .value_name("WORD")
-                        .help("words must appear in each group of guesses")
+                        .help("words that must appear in each group of guesses")
                 )
                 .arg(
                     clap::Arg::new("tries")
