@@ -12,6 +12,12 @@ fn main() {
         .takes_value(true)
         .value_name("FILE")
         .help("newline-delimited lexicon of guessable nonsolutions");
+    let arg_modus = clap::Arg::new("modus")
+        .long("modus")
+        .short('m')
+        .takes_value(true)
+        .value_name("NAME")
+        .help("objective function to use to evaluate guesses");
     let app = clap::app_from_crate!()
         .global_setting(clap::AppSettings::PropagateVersion)
         .setting(clap::AppSettings::SubcommandRequiredElseHelp)
@@ -23,6 +29,7 @@ fn main() {
                 .about("predetermine guesses without seeing any hints")
                 .arg(arg_words.clone())
                 .arg(arg_extra.clone())
+                .arg(arg_modus.clone())
                 .arg(
                     clap::Arg::new("count")
                         .long("count")
@@ -56,12 +63,14 @@ fn main() {
                 .about("play every possible game of Wordle")
                 .arg(arg_words.clone())
                 .arg(arg_extra.clone())
+                .arg(arg_modus.clone())
         )
         .subcommand(
             clap::App::new("solve")
                 .about("play a game of Wordle")
                 .arg(arg_words.clone())
                 .arg(arg_extra.clone())
+                .arg(arg_modus.clone())
                 .arg(
                     clap::Arg::new("known")
                         .long("known")
