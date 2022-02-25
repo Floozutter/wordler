@@ -55,7 +55,7 @@ fn main() {
                         .takes_value(true)
                         .value_name("N")
                         .help("number of groups of guesses to generate")
-                        .required(true)
+                        .default_value("1")
                 )
         )
         .subcommand(
