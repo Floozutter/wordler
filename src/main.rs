@@ -1,3 +1,7 @@
+mod blind;
+mod every;
+mod solve;
+
 fn main() {
     let arg_words = clap::Arg::new("words")
         .long("words")
