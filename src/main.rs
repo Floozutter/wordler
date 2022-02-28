@@ -22,6 +22,7 @@ fn main() {
         .takes_value(true)
         .value_name("NAME")
         .help("objective function to use to evaluate guesses")
+        .possible_values(["minimax"])
         .default_value("minimax");
     let app = clap::app_from_crate!()
         .global_setting(clap::AppSettings::PropagateVersion)
