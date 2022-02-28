@@ -21,7 +21,8 @@ fn main() {
         .short('m')
         .takes_value(true)
         .value_name("NAME")
-        .help("objective function to use to evaluate guesses");
+        .help("objective function to use to evaluate guesses")
+        .default_value("minimax");
     let app = clap::app_from_crate!()
         .global_setting(clap::AppSettings::PropagateVersion)
         .setting(clap::AppSettings::SubcommandRequiredElseHelp)
