@@ -99,5 +99,7 @@ fn main() {
                 )
         );
     let matches = app.get_matches();
-    println!("{matches:?}");
+    match matches.subcommand() {
+        _ => todo!(),
+    }
 }
