@@ -100,6 +100,9 @@ fn main() {
         );
     let matches = app.get_matches();
     match matches.subcommand() {
+        Some(("blind", _)) => {
+            println!("hello blind");
+        },
         _ => todo!(),
     }
 }
