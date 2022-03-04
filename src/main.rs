@@ -106,6 +106,9 @@ fn main() {
         Some(("every", _)) => {
             println!("hello every");
         },
+        Some(("solve", _)) => {
+            println!("hello solve");
+        },
         _ => todo!(),
     }
 }
