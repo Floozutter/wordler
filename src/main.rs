@@ -109,6 +109,6 @@ fn main() {
         Some(("solve", _)) => {
             println!("hello solve");
         },
-        _ => unreachable!(),
+        _ => unreachable!("arms should exhaust all valid subcommands"),
     }
 }
