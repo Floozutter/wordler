@@ -98,8 +98,7 @@ fn main() {
                         .help("prompt to reveal all remaining solutions")
                 )
         );
-    let matches = app.get_matches();
-    match matches.subcommand() {
+    match app.get_matches().subcommand() {
         Some(("blind", _)) => {
             println!("hello blind");
         },
