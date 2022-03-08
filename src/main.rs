@@ -103,7 +103,7 @@ fn main() {
             blind::run();
         },
         Some(("every", _)) => {
-            println!("hello every");
+            every::run();
         },
         Some(("solve", _)) => {
             println!("hello solve");
