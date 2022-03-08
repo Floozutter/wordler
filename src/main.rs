@@ -100,7 +100,7 @@ fn main() {
         );
     match app.get_matches().subcommand() {
         Some(("blind", _)) => {
-            println!("hello blind");
+            blind::run();
         },
         Some(("every", _)) => {
             println!("hello every");
