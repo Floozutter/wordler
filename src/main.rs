@@ -106,7 +106,7 @@ fn main() {
             every::run();
         },
         Some(("solve", _)) => {
-            println!("hello solve");
+            solve::run();
         },
         _ => unreachable!("arms should exhaust all valid subcommands"),
     }
