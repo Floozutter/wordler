@@ -99,15 +99,9 @@ fn main() {
                 )
         );
     match app.get_matches().subcommand() {
-        Some(("blind", _)) => {
-            blind::run();
-        },
-        Some(("every", _)) => {
-            every::run();
-        },
-        Some(("solve", _)) => {
-            solve::run();
-        },
+        Some(("blind", _)) => blind::run(),
+        Some(("every", _)) => every::run(),
+        Some(("solve", _)) => solve::run(),
         _ => unreachable!("arms should exhaust all valid subcommands"),
     }
 }
