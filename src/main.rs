@@ -98,10 +98,10 @@ fn main() {
                         .help("prompt to reveal all remaining solutions")
                 )
         );
-    match app.get_matches().subcommand() {
+    let _ = match app.get_matches().subcommand() {
         Some(("blind", _m)) => blind::run(),
         Some(("every", _m)) => every::run(),
         Some(("solve", _m)) => solve::run(),
         _ => unreachable!("arms should exhaust all valid subcommands"),
-    }
+    };
 }
