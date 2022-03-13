@@ -98,10 +98,14 @@ fn main() {
                         .help("prompt to reveal all remaining solutions")
                 )
         );
-    let _ = match app.get_matches().subcommand() {
+    let result = match app.get_matches().subcommand() {
         Some(("blind", _m)) => blind::run(),
         Some(("every", _m)) => every::run(),
         Some(("solve", _m)) => solve::run(),
         _ => unreachable!("arms should exhaust all valid subcommands"),
     };
+    if let Err(error) = result {
+        eprintln!("error: {}!", error);
+        std::process::exit(1);
+    }
 }
