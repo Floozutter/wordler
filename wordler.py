@@ -20,22 +20,21 @@ def choose_guess(words: frozenset[str]) -> str:
     return max(words, key = lambda w: t_score(w) + c_score(w))
 
 @cache
-def deduce_hints(solution: str, guess: str) -> tuple[Hint, ...]:
-    hints = [
-        Hint.THERE if c == target else Hint.OTHERWHERE if c in solution else Hint.NOWHERE
-        for c, target in zip(guess, solution)
-    ]
+def get_hints(solution: str, guess: str) -> tuple[Hint, ...]:
     counter = Counter(solution)
-    for i in reversed(range(len(hints))):
-        if hints[i] is Hint.OTHERWHERE and sum(
-            1 for c, h in zip(guess, hints)
-            if c == guess[i] and h in {Hint.THERE, Hint.OTHERWHERE}
-        ) > counter[guess[i]]:
-            hints[i] = Hint.NOWHERE
+    hints = [Hint.NOWHERE for _ in solution]
+    for i in range(len(hints)):
+        if guess[i] == solution[i]:
+            hints[i] = Hint.THERE
+            counter[guess[i]] -= 1
+    for i in range(len(hints)):
+        if counter[guess[i]] > 0:
+            hints[i] = Hint.OTHERWHERE
+            counter[guess[i]] -= 1
     return tuple(hints)
 
 def filter_words(words: frozenset[str], guess: str, hints: tuple[Hint, ...]) -> frozenset[str]:
-    return frozenset(w for w in words if deduce_hints(w, guess) == hints)
+    return frozenset(w for w in words if get_hints(w, guess) == hints)
 
 def parse_args() -> tuple[Path, int, str | None]:
     parser = ArgumentParser()
@@ -60,7 +59,7 @@ def main(wordlist: Path, n: int, solution: str | None) -> None:
     while remaining:
         guess = choose_guess(remaining)
         if solution is not None:
-            hints = deduce_hints(solution, guess)
+            hints = get_hints(solution, guess)
             print(f"{i+1}: {guess} {''.join(str(h.value) for h in hints)}")
         else:
             response = prompt_hints(guess)
