@@ -1,5 +1,6 @@
 from argparse import ArgumentParser
 from collections import Counter
+from collections.abc import Set
 from enum import Enum
 from functools import cache
 from pathlib import Path
@@ -9,15 +10,15 @@ class Hint(Enum):
     OTHERWHERE = 1
     THERE = 2
 
-def choose_guess(words: frozenset[str]) -> str:
+def guess_by_letter_frequency(_words: Set[str], remaining: Set[str]) -> str:
     # score guesses by how common their unique letters are (regardless of position)
-    total_counter = Counter(c for w in words for c in w)
+    total_counter = Counter(c for w in remaining for c in w)
     t_score = lambda w: sum(total_counter[c] for c in frozenset(w))
     # score guesses by how common each letter is in their respective column
-    column_counters: tuple[Counter[str], ...] = tuple(map(Counter, zip(*words)))
+    column_counters: tuple[Counter[str], ...] = tuple(map(Counter, zip(*remaining)))
     c_score = lambda w: sum(counter[c] for c, counter in zip(w, column_counters))
     # choose the guess that maximizes the sum of both scores
-    return max(words, key = lambda w: t_score(w) + c_score(w))
+    return max(remaining, key = lambda w: t_score(w) + c_score(w))
 
 @cache
 def get_hints(solution: str, guess: str) -> tuple[Hint, ...]:
@@ -33,7 +34,7 @@ def get_hints(solution: str, guess: str) -> tuple[Hint, ...]:
             counter[guess[i]] -= 1
     return tuple(hints)
 
-def filter_words(words: frozenset[str], guess: str, hints: tuple[Hint, ...]) -> frozenset[str]:
+def filter_words(words: Set[str], guess: str, hints: tuple[Hint, ...]) -> frozenset[str]:
     return frozenset(w for w in words if get_hints(w, guess) == hints)
 
 def parse_args() -> tuple[Path, int, str | None]:
@@ -57,7 +58,7 @@ def main(wordlist: Path, n: int, solution: str | None) -> None:
         print("if the guessed word is invalid, input an `!` character.")
     i = 0
     while remaining:
-        guess = choose_guess(remaining)
+        guess = guess_by_letter_frequency(words, remaining)
         if solution is not None:
             hints = get_hints(solution, guess)
             print(f"{i+1}: {guess} {''.join(str(h.value) for h in hints)}")
