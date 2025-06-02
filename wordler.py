@@ -20,6 +20,14 @@ def guess_by_letter_frequency(_words: Set[str], remaining: Set[str]) -> str:
     # choose the guess that maximizes the sum of both scores
     return max(remaining, key = lambda w: t_score(w) + c_score(w))
 
+def guess_by_mean_filtered(words: Set[str], remaining: Set[str]) -> str:
+    def mean_filtered(word: str) -> float:
+        return sum(
+            len(remaining) - len(filter_words(remaining, word, get_hints(solution, word)))
+            for solution in remaining
+        ) / len(remaining)
+    return max(remaining, key = mean_filtered)
+
 @cache
 def get_hints(solution: str, guess: str) -> tuple[Hint, ...]:
     counter = Counter(solution)
@@ -58,7 +66,7 @@ def main(wordlist: Path, n: int, solution: str | None) -> None:
         print("if the guessed word is invalid, input an `!` character.")
     i = 0
     while remaining:
-        guess = guess_by_letter_frequency(words, remaining)
+        guess = guess_by_mean_filtered(words, remaining)
         if solution is not None:
             hints = get_hints(solution, guess)
             print(f"{i+1}: {guess} {''.join(str(h.value) for h in hints)}")

@@ -45,7 +45,7 @@ def test_get_hints() -> None:
     assert wordler.get_hints("BUNNY", "BUNNY") == h(2, 2, 2, 2, 2)
 
 def test_guess_functions() -> None:
-    guess_functions = (wordler.guess_by_letter_frequency,)
+    guess_functions = (wordler.guess_by_letter_frequency, wordler.guess_by_mean_filtered)
     words = {"BNNNY", "BNUUY", "BUNNY", "ENNUI", "INNER", "NANNY"}
     for gf in guess_functions:
         assert not solves(gf, words, "?????")
