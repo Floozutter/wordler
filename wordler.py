@@ -23,7 +23,7 @@ def guess_by_letter_frequency(_words: Set[str], remaining: Set[str]) -> str:
 def guess_by_mean_filtered(words: Set[str], remaining: Set[str]) -> str:
     def mean_filtered(word: str) -> float:
         return sum(
-            len(remaining) - len(filter_words(remaining, word, get_hints(solution, word)))
+            len(remaining) - len(filter_words(word, get_hints(solution, word), remaining))
             for solution in remaining
         ) / len(remaining)
     return max(remaining, key = mean_filtered)
@@ -42,7 +42,7 @@ def get_hints(solution: str, guess: str) -> tuple[Hint, ...]:
             counter[guess[i]] -= 1
     return tuple(hints)
 
-def filter_words(words: Set[str], guess: str, hints: tuple[Hint, ...]) -> frozenset[str]:
+def filter_words(guess: str, hints: tuple[Hint, ...], words: Set[str]) -> frozenset[str]:
     return frozenset(w for w in words if get_hints(w, guess) == hints)
 
 def parse_args() -> tuple[Path, int, str | None]:
@@ -78,7 +78,7 @@ def main(wordlist: Path, n: int, solution: str | None) -> None:
             hints = response
         if all(h is Hint.THERE for h in hints):
             break
-        remaining = filter_words(remaining, guess, hints)
+        remaining = filter_words(guess, hints, remaining)
         i += 1
 
 def prompt_hints(guess: str) -> tuple[Hint, ...] | None:

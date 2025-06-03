@@ -11,7 +11,7 @@ def solves(gf: Callable[[Set[str], Set[str]], str], words: Set[str], solution: s
         hints = wordler.get_hints(solution, guess)
         if all(h is wordler.Hint.THERE for h in hints):
             return True
-        remaining = wordler.filter_words(remaining, guess, hints)
+        remaining = wordler.filter_words(guess, hints, remaining)
     return False
 
 def test_get_hints() -> None:
