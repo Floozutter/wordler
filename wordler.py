@@ -22,10 +22,12 @@ def guess_by_letter_frequency(_words: Set[str], remaining: Set[str]) -> str:
 
 def guess_by_mean_filtered(words: Set[str], remaining: Set[str]) -> str:
     def mean_filtered(word: str) -> float:
-        return sum(
-            len(remaining) - len(filter_words(word, get_hints(solution, word), remaining))
-            for solution in remaining
-        ) / len(remaining)
+        n = len(remaining)
+        # convert each possible solution into its hint pattern
+        patterns = Counter(get_hints(solution, word) for solution in remaining)
+        # each solution filters out other solutions with differing hint patterns
+        # so each solution with a pattern occuring c times will filter out n-c solutions
+        return sum(c*(n-c) for c in patterns.values()) / n
     return max(remaining, key = mean_filtered)
 
 @cache
@@ -66,7 +68,7 @@ def main(wordlist: Path, n: int, solution: str | None) -> None:
         print("if the guessed word is invalid, input an `!` character.")
     i = 0
     while remaining:
-        guess = guess_by_mean_filtered(words, remaining)
+        guess = guess_by_letter_frequency(words, remaining)
         if solution is not None:
             hints = get_hints(solution, guess)
             print(f"{i+1}: {guess} {''.join(str(h.value) for h in hints)}")
